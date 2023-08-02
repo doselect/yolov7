@@ -16,7 +16,7 @@ if os.path.isfile(requirements_path):
         install_requires = f.read().splitlines()
 
 setup(
-    name="toolbox",
+    name="yolov7",
     version=VERSION,
     description="DoSelect's internal python tools",
     author="Doselect",
