@@ -24,7 +24,7 @@ setup(
     url="https://github.com/doselect/yolov7",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=requirements_path,
+    install_requires=install_requires,
     zip_safe=False,
     keywords="doselect object detection tool",
     classifiers=[
