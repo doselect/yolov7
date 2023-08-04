@@ -37,6 +37,7 @@ class Yolov7():
         self.stride = int(self.model.stride.max())  # model stride
     
     def load_model_weights(self):
+        file = "/home/sajalrastogi/DoSelect/VideoProctoring/do-proctor-engine-api/src/yolov7.pt"
         file = pathlib.Path(str(file).strip().replace("'", '').lower())
         if not file.exists():
             os.system(f'curl -L {ObjectDetectionConstants.OBJECT_DETECTION_WIEGHTS_PATH.value}')
