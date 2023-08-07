@@ -16,7 +16,9 @@ from utils.general import non_max_suppression
 from utils.torch_utils import select_device
 from constants import ObjectDetectionConstants
 
-class Yolov7():
+class Yolov7:
+    """wrapper for yolov7 implementation
+    """
     image_size = None
     device = None
     convert_image = None
@@ -41,28 +43,32 @@ class Yolov7():
     
 
     def load_model_weights(self, model_path):
+        """load model weights from model_path
+        :param model_path: str
+        """
         file = pathlib.Path(str(model_path).strip().replace("'", '').lower())
         if not file.exists():
             os.system(f'wget {ObjectDetectionConstants.OBJECT_DETECTION_WIEGHTS_PATH.value}')
 
 
     def get_object_confidence_mapping(self, objects_to_be_detected):
+        """get object and confidence mapping for objects list
+
+        :param objects_to_be_detected: list
+        :return: dict
+        """
         objects_detected_confidence_mapping = {}
         for _object in objects_to_be_detected:
             objects_detected_confidence_mapping[_object] = []
         return objects_detected_confidence_mapping
 
 
-    def load_image(self, image):
-        img = letterbox(image, self.image_size, stride=self.stride)[0]
-
-        # Convert
-        img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3x416x416
-        img = np.ascontiguousarray(img)
-        return img
-
-
     def preprocess_image(self, image):
+        """preprocessed image compatible for yolov7
+
+        :param image: np.ndarray
+        :return: np.ndarray
+        """
         img = letterbox(image, 640, stride=32)[0]
         img = img[:, :, ::-1].transpose(2, 0, 1)
         img = np.ascontiguousarray(img)
@@ -76,7 +82,11 @@ class Yolov7():
 
 
     def detect_object(self, img):
+        """object detection method
 
+        :param img: np.ndarray
+        :return: dict: {object: [{confidence: , bbox: }]}
+        """
         img = self.preprocess_image(image=img)
 
         with torch.no_grad():   # Calculating gradients would cause a GPU memory leak
@@ -98,6 +108,6 @@ class Yolov7():
             if label in list(self.objects_detected_confidence_mapping.keys()):
                 # item list containes boundary box till index 4 and index 4 is confidence
                 self.objects_detected_confidence_mapping[label].append({'bbox': item[:4], 'confidence': item[4]})
-        # return {object: [{confidence: , bbox: }]}
+
         return self.objects_detected_confidence_mapping
 
