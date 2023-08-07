@@ -16,4 +16,4 @@ class ObjectDetectionConstants(Enum):
     OBJECT_DETECTION_PROCESSOR = 'cpu'
     OBJECT_DETECTION_MODEL_NAME = 'yolov7.pt'
     OBJECT_DETECTION_IMAGE_DIMENSIONS = 3
-    OBJECT_DETECTION_OBJECTS = {'cell_phone': []}
+    OBJECT_DETECTION_OBJECTS = {'cell phone': []}
