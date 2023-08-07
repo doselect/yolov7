@@ -27,10 +27,11 @@ class Yolov7():
         self.image_size = ObjectDetectionConstants.OBJECT_DETECTION_IMAGE_SIZE.value
         self.device = select_device(ObjectDetectionConstants.OBJECT_DETECTION_PROCESSOR.value)
         self.convert_image = self.device.type != ObjectDetectionConstants.OBJECT_DETECTION_PROCESSOR.value
-        model_path = module_path.replace(os.getcwd() + "/", "")
-        self.load_model_weights()
-        self.model = attempt_load([model_path + f'/{ObjectDetectionConstants.OBJECT_DETECTION_MODEL_NAME.value}'], 
-                                  map_location=self.device)
+        model_root_path = module_path.replace(os.getcwd() + "/", "")
+        model_path = model_root_path + f'/{ObjectDetectionConstants.OBJECT_DETECTION_MODEL_NAME.value}'
+        self.load_model_weights(model_path)
+        self.model = attempt_load([model_path], 
+                                  map_location=self.device) 
         if objects_to_be_detected is None:
             self.objects_detected_confidence_mapping = copy.deepcopy(ObjectDetectionConstants.OBJECT_DETECTION_OBJECTS.value)
         else:
@@ -39,11 +40,10 @@ class Yolov7():
         self.stride = int(self.model.stride.max())  # model stride
     
 
-    def load_model_weights(self):
-        file = "/home/sajalrastogi/DoSelect/VideoProctoring/do-proctor-engine-api/src/yolov7.pt"
-        file = pathlib.Path(str(file).strip().replace("'", '').lower())
+    def load_model_weights(self, model_path):
+        file = pathlib.Path(str(model_path).strip().replace("'", '').lower())
         if not file.exists():
-            os.system(f'curl -L {ObjectDetectionConstants.OBJECT_DETECTION_WIEGHTS_PATH.value}')
+            os.system(f'wget {ObjectDetectionConstants.OBJECT_DETECTION_WIEGHTS_PATH.value}')
 
 
     def get_object_confidence_mapping(self, objects_to_be_detected):
