@@ -48,7 +48,7 @@ class Yolov7:
         """
         file = pathlib.Path(str(model_path).strip().replace("'", '').lower())
         if not file.exists():
-            os.system(f'wget {ObjectDetectionConstants.OBJECT_DETECTION_WIEGHTS_PATH.value}')
+            os.system(f"aws s3 cp s3://{ObjectDetectionConstants.S3_BUCKET_NAME.value}/{ObjectDetectionConstants.OBJECT_DETECTION_MODEL_NAME.value} {model_path}")
 
 
     def get_object_confidence_mapping(self, objects_to_be_detected):
