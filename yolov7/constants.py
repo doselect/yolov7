@@ -17,5 +17,5 @@ class ObjectDetectionConstants(Enum):
     OBJECT_DETECTION_MODEL_NAME = 'yolov7.pt'
     OBJECT_DETECTION_IMAGE_DIMENSIONS = 3
     OBJECT_DETECTION_OBJECTS = {'cell phone': []}
-    S3_BUCKET_NAME = os.environ.get('PROCTOR_BUCKET')
+    S3_BUCKET_NAME = os.environ.get('ASSET_BUCKET')
 
