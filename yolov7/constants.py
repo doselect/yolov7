@@ -11,7 +11,6 @@ class ObjectDetectionConstants(Enum):
         'agnostic_nms': False,
         }
     
-    OBJECT_DETECTION_WIEGHTS_PATH = os.environ.get('OBJECT_DETECTION_WIEGHTS', 'https://doselect-dev-packages.s3.ap-southeast-1.amazonaws.com/yolov3.pt')
     OBJECT_DETECTION_IMAGE_SIZE = 640
     OBJECT_DETECTION_PROCESSOR = 'cpu'
     OBJECT_DETECTION_MODEL_NAME = 'yolov7.pt'
