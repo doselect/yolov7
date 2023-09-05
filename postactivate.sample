@@ -1,0 +1,4 @@
+##postactivate
+#!/bin/bash
+
+export PROCTOR_BUCKET="do-proctor-dev"
